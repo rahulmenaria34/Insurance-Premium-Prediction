@@ -7,6 +7,8 @@ import pickle
 import numpy as np
 import sklearn
 from sklearn.preprocessing import StandardScaler
+os.putenv('LANG', 'en_US.UTF-8')
+os.putenv('LC_ALL', 'en_US.UTF-8')
 app = Flask(__name__)
 model = pickle.load(open('regression_rf1.pkl', 'rb'))
 @app.route('/',methods=['GET'])
