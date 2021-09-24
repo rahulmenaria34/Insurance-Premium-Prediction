@@ -1,24 +1,19 @@
 from flask import Flask, render_template, request
 import jsonify
-import os
 import requests
-from wsgiref import simple_server
 import pickle
 import numpy as np
 import sklearn
 from sklearn.preprocessing import StandardScaler
-os.putenv('LANG', 'en_US.UTF-8')
-os.putenv('LC_ALL', 'en_US.UTF-8')
 app = Flask(__name__)
 model = pickle.load(open('regression_rf1.pkl', 'rb'))
 @app.route('/',methods=['GET'])
-def home():
+def Home():
     return render_template('index.html')
 
 
 standard_to = StandardScaler()
 @app.route("/predict", methods=['POST'])
-@cross_origin()
 def predict():
     if request.method == 'POST':
         age = int(request.form['Age'])
@@ -82,9 +77,5 @@ def predict():
         return render_template('index.html')
 
 if __name__=="__main__":
-    #clApp = ClientApp()
-    port = int(os.getenv("PORT"))
-    host = '0.0.0.0'
-    httpd = simple_server.make_server(host=host, port=port, app=app)
-    httpd.serve_forever()
+    app.run(debug=True)
 
