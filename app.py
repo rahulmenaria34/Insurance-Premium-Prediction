@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
 import jsonify
+import os
 import requests
+from wsgiref import simple_server
 import pickle
 import numpy as np
 import sklearn
@@ -77,5 +79,9 @@ def predict():
         return render_template('index.html')
 
 if __name__=="__main__":
-    app.run(debug=True)
+    #clApp = ClientApp()
+    port = int(os.getenv("PORT"))
+    host = '0.0.0.0'
+    httpd = simple_server.make_server(host=host, port=port, app=app)
+    httpd.serve_forever()
 
